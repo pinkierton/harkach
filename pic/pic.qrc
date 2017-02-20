@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>back.gif</file>
+        <file>dvlogo.png</file>
+        <file>arrow-right.svg</file>
+        <file>arrow-right-dark.svg</file>
+        <file>arrow-down.svg</file>
+        <file>arrow-down-dark.svg</file>
+        <file>zoom-dark.svg</file>
+        <file>draw-arrow-back.svg</file>
+        <file>document-edit.svg</file>
+        <file>view-refresh.svg</file>
+        <file>application-menu.svg</file>
+    </qresource>
+</RCC>
