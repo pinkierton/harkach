@@ -11,6 +11,8 @@
 #include "Attachment.h"
 #include "PostsView.h"
 
+#define PROJECT_ROOT "/home/wolph/workspace/harkach/"
+
 class MainApp : public QObject
 {
     Q_OBJECT
