@@ -114,9 +114,8 @@ public:
     void setPosts(QList<PostObject*>&& threads) {
         qDebug() << Q_FUNC_INFO;
 
-        if (threads.isEmpty()) {
-            qDebug() << "[WW] Empty `QList<PostObject*>&& threads\'";
-        }
+        if (threads.isEmpty())
+            return;
 
         int pos = mPosts.count();
 
