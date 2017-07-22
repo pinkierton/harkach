@@ -123,7 +123,6 @@ public:
             mPosts = threads;
         } else {
             qDebug() << "fuck" << threads;
-            threads.removeFirst();
             mPosts << threads;
         }
         //

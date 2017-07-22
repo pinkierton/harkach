@@ -72,7 +72,8 @@ void PostsView::updatePage() {
              << mPostModel.getPosts().last()->num();
 
 
-    requestPostsByAbsNum(mThreadNum.board, mThreadNum.thread, mPostModel.getPosts().last()->num());
+    requestPostsByAbsNum(mThreadNum.board, mThreadNum.thread, mPostModel.getPosts().last()->num() + 1);
+    // Пост #.last()->num() уже есть, нужен следующий
 }
 
 ThreadNum PostsView::threadNum() const noexcept{
