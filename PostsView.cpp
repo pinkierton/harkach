@@ -1,5 +1,7 @@
 #include "PostsView.h"
 
+
+
 PostsView::PostsView(QQuickItem *parent) : QQuickItem(parent)
 {
 
@@ -41,6 +43,9 @@ void PostsView::processPosts() {
 
         if (parseError.error) {
             qWarning() << parseError.error << parseError.errorString();
+        } else if (! doc.isArray()) { // API вернул ошибку
+            qDebug() << "[WW] API error: "  << doc;
+            // Здесь можно вызвать обработчик
         } else {
             QList<PostObject*> posts;
             posts.reserve(600);
@@ -67,7 +72,8 @@ void PostsView::updatePage() {
              << mPostModel.getPosts().last()->num();
 
 
-    requestPostsByAbsNum(mThreadNum.board, mThreadNum.thread, mPostModel.getPosts().last()->num());
+    requestPostsByAbsNum(mThreadNum.board, mThreadNum.thread, mPostModel.getPosts().last()->num() + 1);
+    // Пост #.last()->num() уже есть, нужен следующий
 }
 
 ThreadNum PostsView::threadNum() const noexcept{

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlEngine engine;
-    QUrl url = QUrl::fromLocalFile(QStringLiteral("/home/wolph/workspace/harkach/qml/main.qml"));
+    QUrl url = QUrl::fromLocalFile(QStringLiteral(PROJECT_ROOT "qml/main.qml"));
     QQmlComponent rootComponent(&engine, url);
 
     if (rootComponent.isError()) {

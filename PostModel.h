@@ -114,13 +114,15 @@ public:
     void setPosts(QList<PostObject*>&& threads) {
         qDebug() << Q_FUNC_INFO;
 
+        if (threads.isEmpty())
+            return;
+
         int pos = mPosts.count();
 
         if (mPosts.isEmpty()) {
             mPosts = threads;
         } else {
             qDebug() << "fuck" << threads;
-            threads.removeFirst();
             mPosts << threads;
         }
         //
