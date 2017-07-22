@@ -24,6 +24,8 @@ SOURCES += main.cpp \
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+DEFINES += "PROJECT_ROOT=\\\"$$_PRO_FILE_PWD_/\\\""
+
 DISTFILES += \
     qml/main.qml \
     qml/Ttest.qml \
