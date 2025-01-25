@@ -48,10 +48,6 @@ public:
     AttachmentList files() const;
     void setFiles(const AttachmentList &value);
 
-    QQmlListProperty<Attachment> filesListProperty() {
-        return QQmlListProperty<Attachment>(parent(), mFiles);
-    }
-
 private:
     int mNum;
     int mPostsCount;

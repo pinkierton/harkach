@@ -15,14 +15,14 @@ PostObject::PostObject(const QJsonObject &postObj, QObject *parent)
       mDate(postObj[QLatin1String("date")].toString()),
       mEmail(postObj[QLatin1String("email")].toString()),
       mFiles(Attachment::makeObjectList(postObj[QLatin1String("files")].toArray())),
-      mLasthit(QDateTime::fromTime_t(postObj[QLatin1String("lasthit")].toVariant().toUInt())),
+      mLasthit(QDateTime::fromSecsSinceEpoch(postObj[QLatin1String("lasthit")].toVariant().toUInt())),
       mName(postObj[QLatin1String("name")].toString()),
       mNum(postObj[QLatin1String("num")].toVariant().toInt()),
       mOp(static_cast<bool>(postObj[QLatin1String("op")].toInt())),
       mParent(postObj[QLatin1String("parent")].toVariant().toInt()),
       mSticky(static_cast<bool>(postObj[QLatin1String("sticky")].toInt())),
       mSubject(postObj[QLatin1String("subject")].toString()),
-      mTimestamp(QDateTime::fromTime_t(postObj[QLatin1String("timestamp")].toVariant().toUInt())),
+      mTimestamp(QDateTime::fromSecsSinceEpoch(postObj[QLatin1String("timestamp")].toVariant().toUInt())),
       mTrip(postObj[QLatin1String("trip")].toString()),
       mTripType(postObj[QLatin1String("trip_type")].toString())
 {

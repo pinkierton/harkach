@@ -1,5 +1,6 @@
 #include "ThreadObject.h"
 #include <QVariant>
+#include <QDateTime>
 #include <QDebug>
 
 ThreadObject::ThreadObject(const QJsonObject &threadObj, QObject *parent)
@@ -9,8 +10,8 @@ ThreadObject::ThreadObject(const QJsonObject &threadObj, QObject *parent)
       mPostsCount(threadObj[QLatin1String("posts_count")].toInt()),
       mComment(threadObj[QLatin1String("comment")].toString().remove(QLatin1String("\\r\\n"))),
       mSubject(threadObj[QLatin1String("subject")].toString()),
-      mTimeStamp(QDateTime::fromTime_t(threadObj[QLatin1String("timestamp")].toVariant().toUInt())),
-      mLasthit(QDateTime::fromTime_t(threadObj[QLatin1String("lasthit")].toVariant().toUInt())),
+      mTimeStamp(QDateTime::fromSecsSinceEpoch(threadObj[QLatin1String("timestamp")].toVariant().toUInt())),
+      mLasthit(QDateTime::fromSecsSinceEpoch(threadObj[QLatin1String("lasthit")].toVariant().toUInt())),
       mFiles(Attachment::makeAttachmentList(threadObj[QLatin1String("files")].toArray(), this))
 {
 }
