@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.1
 import MyLib 1.0
 
-import QtGraphicalEffects 1.0
+import QtQuick.Effects
 
 ItemDelegate {
     id: root
@@ -35,15 +35,14 @@ ItemDelegate {
         color:'white'
     }
 
-    DropShadow {
+    MultiEffect {
         id: shadow
-        anchors.fill: br
-        horizontalOffset: 2
-        verticalOffset: 2
-        radius: 10.0
-        samples: 17
-        color: "#80000000"
         source: br
+        anchors.fill: br
+        shadowBlur: 1.0
+        shadowEnabled: true
+        shadowColor: "#80000000"
+        shadowVerticalOffset: 2
     }
 
     ColumnLayout {

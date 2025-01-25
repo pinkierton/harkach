@@ -4,8 +4,6 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.1
 import MyLib 1.0
 
-import QtGraphicalEffects 1.0
-
 ColumnLayout {
     RowLayout {
         Text {
