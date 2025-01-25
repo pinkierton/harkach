@@ -14,7 +14,7 @@
 #include <QEventLoop>
 #include <QQmlListProperty>
 
-const QUrl MainApp::postUrl(QStringLiteral("https://2ch.hk/makaba/posting.fcgi?json=1"));
+const QUrl MainApp::postUrl(QStringLiteral("https://2ch.hk/user/posting?nc=1"));
 const QUrl MainApp::getBoardsUrl(QStringLiteral("https://2ch.hk/makaba/mobile.fcgi?task=get_boards"));
 
 MainApp::MainApp(QObject *parent): QObject(parent)
