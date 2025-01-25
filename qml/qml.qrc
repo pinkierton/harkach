@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>BoardDelegate.qml</file>
+        <file>BoardSection.qml</file>
+        <file>BoardsView.qml</file>
+        <file>ImgDescription.qml</file>
+        <file>LoadSplash.qml</file>
+        <file>main.qml</file>
+        <file>PostDelegate.qml</file>
+        <file>PostPanel.qml</file>
+        <file>PostsViewPage.qml</file>
+        <file>TextOnly.qml</file>
+        <file>ThreadsViewPage.qml</file>
+        <file>TopToolBar.qml</file>
+        <file>Ttest.qml</file>
+    </qresource>
+</RCC>

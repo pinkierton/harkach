@@ -52,4 +52,5 @@ HEADERS += \
     PostModel.h
 
 RESOURCES += \
-    pic/pic.qrc
+    pic/pic.qrc \
+    qml/qml.qrc
