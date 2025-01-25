@@ -144,15 +144,7 @@ void MainApp::sendPost(const QString &board, const QString &thread, const QStrin
 
     QHttpPart captchaTypePart;
     captchaTypePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"captcha_type\""));
-    captchaTypePart.setBody("2chaptcha");
-
-    QHttpPart captchaIdPart;
-    captchaIdPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"2chaptcha_id\""));
-    captchaIdPart.setBody(id.toUtf8());
-
-    QHttpPart captchaValuePart;
-    captchaValuePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"2chaptcha_value\""));
-    captchaValuePart.setBody(captcha.toUtf8());
+    captchaTypePart.setBody("emoji_captcha");
 
     multiPart->append(taskPart);
     multiPart->append(boardPart);
@@ -160,8 +152,6 @@ void MainApp::sendPost(const QString &board, const QString &thread, const QStrin
     multiPart->append(commentPart);
 
     multiPart->append(captchaTypePart);
-    multiPart->append(captchaIdPart);
-    multiPart->append(captchaValuePart);
 
     QNetworkRequest request(postUrl);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("multipart/form-data; boundary=").append(multiPart->boundary()));
