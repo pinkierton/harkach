@@ -4,6 +4,7 @@
 #include <QQmlContext>
 #include <QDebug>
 #include <QQuickWindow>
+#include <QCommandLineParser>
 
 #include "MainApp.h"
 #include "Attachment.h"
@@ -23,6 +24,18 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion("0.0.1");
     QGuiApplication app(argc, argv);
 
+    QCommandLineParser parser;
+    parser.setApplicationDescription("Десктопный клиент для имиджборд");
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    QCommandLineOption usercodeOption(QStringList() << "c" << "usercode", "Кука пасскода", "code");
+    parser.addOption(usercodeOption);
+
+    parser.process(app);
+
+    const QString usercode = parser.value(usercodeOption);
+
     QQmlEngine engine;
     QUrl url(QStringLiteral("qrc:/main.qml"));
     QQmlComponent rootComponent(&engine, url);
@@ -36,6 +49,7 @@ int main(int argc, char *argv[])
 
     MainApp *mainApp = new MainApp(mainWindow);
     engine.rootContext()->setContextObject(mainApp);
+    mainApp->setUsercode(usercode);
 
     rootComponent.completeCreate();
     return app.exec();
