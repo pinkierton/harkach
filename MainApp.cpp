@@ -9,6 +9,8 @@
 #include <QStringBuilder>
 #include <QDateTime>
 #include <QFile>
+#include <QNetworkCookieJar>
+#include <QNetworkCookie>
 
 #include "Board.h"
 #include <QEventLoop>
@@ -52,6 +54,21 @@ MainApp::MainApp(QObject *parent): QObject(parent)
 
 BoardModel *MainApp::getBoardModel() const {
     return const_cast<BoardModel* const>(&mBoardModel);
+}
+
+void MainApp::setUsercode(const QString& value) {
+    mUsercode = value;
+
+    if (!mUsercode.isNull()) {
+        QNetworkCookie passcodeAuth;
+        passcodeAuth.setName("passcode_auth");
+        passcodeAuth.setValue(mUsercode.toUtf8());
+        passcodeAuth.setDomain("2ch.hk");
+        passcodeAuth.setPath("/");
+        passcodeAuth.setExpirationDate(QDateTime().addYears(1));
+
+        manager.cookieJar()->insertCookie(passcodeAuth);
+    }
 }
 
 void MainApp::requestBoards() {
@@ -138,6 +155,10 @@ void MainApp::sendPost(const QString &board, const QString &thread, const QStrin
     threadPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"thread\""));
     threadPart.setBody(thread.toUtf8());
 
+    QHttpPart codePart;
+    codePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"usercode\""));
+    codePart.setBody(mUsercode.toUtf8());
+
     QHttpPart commentPart;
     commentPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"comment\""));
     commentPart.setBody(post.toUtf8());
@@ -149,6 +170,7 @@ void MainApp::sendPost(const QString &board, const QString &thread, const QStrin
     multiPart->append(taskPart);
     multiPart->append(boardPart);
     multiPart->append(threadPart);
+    multiPart->append(codePart);
     multiPart->append(commentPart);
 
     multiPart->append(captchaTypePart);

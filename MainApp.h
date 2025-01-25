@@ -19,6 +19,7 @@ class MainApp : public QObject
 public:
     explicit MainApp(QObject *parent = nullptr);
     BoardModel *getBoardModel() const;
+    void setUsercode(const QString& value);
 
 private:
     static const QUrl postUrl;
@@ -26,6 +27,7 @@ private:
 
     QNetworkAccessManager manager;
     BoardModel mBoardModel;
+    QString mUsercode;
 
     void requestBoards();
     void processBoards();
