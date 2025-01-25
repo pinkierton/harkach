@@ -13,17 +13,10 @@ void PostsView::requestPostsByAbsNum(const QString &board, int thread, int num) 
     setDownloading(true);
     //mPostModel.resetPosts();
 
-    QUrlQuery urlQuery;
-    urlQuery.addQueryItem(QLatin1String("task"), QLatin1String("get_thread"));
-    urlQuery.addQueryItem(QLatin1String("board"), board);
-    urlQuery.addQueryItem(QLatin1String("thread"), QString::number(thread));
-    urlQuery.addQueryItem(QLatin1String("num"), QString::number(num));
+    const QUrl getThreadUrl(QStringLiteral("https://2ch.hk/") % board % "/res/" % QString::number(thread) % ".json");
 
-    QUrl url(QLatin1String("https://2ch.hk/makaba/mobile.fcgi"));
-    url.setQuery(urlQuery);
-
-    qDebug() << url;
-    QNetworkRequest request(url);
+    qDebug() << getThreadUrl;
+    QNetworkRequest request(getThreadUrl);
     QNetworkReply *reply = manager.get(request);
 
     connect(reply, &QNetworkReply::finished, this, &PostsView::processPosts);
@@ -45,7 +38,14 @@ void PostsView::processPosts() {
             QList<PostObject*> posts;
             posts.reserve(600);
 
-            QJsonArray postArr = doc.array();
+            QJsonArray threads = doc["threads"].toArray();
+            Q_ASSERT(threads.size() == 1);
+
+            QJsonObject thread = threads[0].toObject();
+            Q_ASSERT(thread.size() == 1);
+
+            QJsonArray postArr = thread["posts"].toArray();
+            Q_ASSERT(!postArr.isEmpty());
 
             for (const QJsonValue &postRef : qAsConst(postArr)) {
                 QJsonObject post = postRef.toObject();
