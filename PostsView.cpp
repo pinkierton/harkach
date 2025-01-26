@@ -11,7 +11,7 @@ PostModel *PostsView::getPostModel() const noexcept {
 
 void PostsView::requestPostsByAbsNum(const QString &board, int thread, int num) {
     setDownloading(true);
-    //mPostModel.resetPosts();
+    mPostModel.resetPosts();
 
     const QUrl getThreadUrl(QStringLiteral("https://2ch.hk/") % board % "/res/" % QString::number(thread) % ".json");
 
