@@ -57,44 +57,6 @@ Drawer {
                 Layout.fillHeight: true
                 
                 wrapMode: TextEdit.WordWrap
-                
-                
-                Image {
-                    id: captchaPic
-
-                    anchors.bottom: parent.bottom
-                    anchors.right: parent.right
-                    anchors.margins: 2
-                    opacity: 0.2 //captchaField.focus ? 1 : 0.1
-
-                    //Layout.maximumHeight: sendButton.height
-                    fillMode: Image.PreserveAspectFit
-                    //Layout.maximumWidth: implicitWidth/2
-
-                    property string captchaID
-                    readonly property string url: 'https://2ch.hk/api/captcha/2chaptcha/id?board=' + threadNum.board + '&thread=' + threadNum.thread
-
-                    source: 'https://2ch.hk/api/captcha/2chaptcha/image/' + captchaID
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            var xmlhttp = new XMLHttpRequest()
-                            xmlhttp.open('GET', captchaPic.url, false);
-                            xmlhttp.send(null);
-
-                            if (xmlhttp.status == 200) {
-                                try {
-                                    var response = JSON.parse(xmlhttp.responseText)
-                                    captchaPic.captchaID = response.id
-                                }
-                                catch (err) {
-                                    console.debug('JSON.parse(' + xmlhttp.responseText + '): ', err)
-                                }
-                            }
-                        }
-                    }
-                }
             }
 
             RowLayout {
@@ -106,7 +68,7 @@ Drawer {
 
                 Button {
                     text: 'post'
-                    onClicked: sendPost(threadNum.board, threadNum.thread.toString(), postField.text, captchaPic.captchaID, captchaValue.text)
+                    onClicked: sendPost(threadNum.board, threadNum.thread.toString(), postField.text, "", captchaValue.text)
                 }
             }
         }
