@@ -111,20 +111,17 @@ public:
         endResetModel();
     }
 
-    void setPosts(QList<PostObject*>&& threads) {
+    void addPosts(QList<PostObject*>&& threads) {
         qDebug() << Q_FUNC_INFO;
 
         int pos = mPosts.count();
 
+        beginInsertRows(QModelIndex(), pos , pos + threads.count() - 1);
         if (mPosts.isEmpty()) {
             mPosts = threads;
         } else {
-            qDebug() << "fuck" << threads;
-            threads.removeFirst();
             mPosts << threads;
         }
-        //
-        beginInsertRows(QModelIndex(), pos /*rowCount()*/, 0+rowCount()-1);
         endInsertRows();
     }
 

@@ -11,9 +11,11 @@ PostModel *PostsView::getPostModel() const noexcept {
 
 void PostsView::requestPostsByAbsNum(const QString &board, int thread, int num) {
     setDownloading(true);
-    mPostModel.resetPosts();
+    if (thread == num) {
+        mPostModel.resetPosts();
+    }
 
-    const QUrl getThreadUrl(QStringLiteral("https://2ch.hk/") % board % "/res/" % QString::number(thread) % ".json");
+    const QUrl getThreadUrl(QStringLiteral("https://2ch.hk/api/mobile/v2/after/") % board % "/" % QString::number(thread) % "/"  % QString::number(num));
 
     qDebug() << getThreadUrl;
     QNetworkRequest request(getThreadUrl);
@@ -38,14 +40,7 @@ void PostsView::processPosts() {
             QList<PostObject*> posts;
             posts.reserve(600);
 
-            QJsonArray threads = doc["threads"].toArray();
-            Q_ASSERT(threads.size() == 1);
-
-            QJsonObject thread = threads[0].toObject();
-            Q_ASSERT(thread.size() == 1);
-
-            QJsonArray postArr = thread["posts"].toArray();
-            Q_ASSERT(!postArr.isEmpty());
+            QJsonArray postArr = doc["posts"].toArray();
 
             for (const QJsonValue &postRef : qAsConst(postArr)) {
                 QJsonObject post = postRef.toObject();
@@ -53,7 +48,7 @@ void PostsView::processPosts() {
                 posts << new PostObject(post);
             }
 
-            mPostModel.setPosts(std::move(posts));
+            mPostModel.addPosts(std::move(posts));
         }
     }
 
@@ -66,8 +61,7 @@ void PostsView::updatePage() {
              << mPostModel.getPosts().first()->num()
              << mPostModel.getPosts().last()->num();
 
-
-    requestPostsByAbsNum(mThreadNum.board, mThreadNum.thread, mPostModel.getPosts().last()->num());
+    requestPostsByAbsNum(mThreadNum.board, mThreadNum.thread, mPostModel.getPosts().last()->num() + 1);
 }
 
 ThreadNum PostsView::threadNum() const noexcept{
